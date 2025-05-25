@@ -11,31 +11,21 @@ const CardsSection = () => {
         const response = await axios.get(
           "https://pokeapi.co/api/v2/pokemon?limit=12"
         );
+        const pokemonData = response.data.results;
 
-        if (!response || !response.data) {
-          throw new Error("Fetch Card Data Error");
-        }
-
-        const data = response.data.results;
-
-        const cardData = await Promise.all(
-          data.map(async (item) => {
-            const response = await axios.get(item.url);
-
-            if (!response || !response.data) {
-              throw new Error("Fetch Card Data Error");
-            }
-
+        const pokemonCards = await Promise.all(
+          pokemonData.map(async (pokemon) => {
+            const cardResponse = await axios.get(pokemon.url);
             return {
-              name: item.name,
-              image: response.data.sprites.front_default,
-              id: response.data.id,
+              id: cardResponse.data.id,
+              name: cardResponse.data.name,
+              image: cardResponse.data.sprites.front_default,
             };
           })
         );
-        setCardList(cardData);
+        setCardList(pokemonCards);
       } catch (error) {
-        console.error("Error fetching card data:", error);
+        console.error("Error Fetching Pokemon Card Data", error);
       }
     };
 
@@ -45,7 +35,7 @@ const CardsSection = () => {
   return (
     <div className="cards-section">
       {cardList.map((card, index) => {
-        return <Card card={card} key={card.id} index={index}/>;
+        return <Card card={card} key={card.id} index={index} />;
       })}
     </div>
   );
