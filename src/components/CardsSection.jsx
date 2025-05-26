@@ -2,8 +2,14 @@ import { useEffect, useState } from "react";
 import Card from "./Card";
 import axios from "axios";
 
-const CardsSection = () => {
+const CardsSection = ({
+  currentScore,
+  onUpdateCurrentScore,
+  bestScore,
+  onUpdateBestScore,
+}) => {
   const [cardList, setCardList] = useState([]);
+  const [pickedCards, setPickedCards] = useState([]);
 
   const shuffleCards = (array) => {
     const shuffledArray = [...array];
@@ -48,7 +54,7 @@ const CardsSection = () => {
   return (
     <div className="cards-section">
       {cardList.length > 0 ? (
-        cardList.map((card, index) => {
+        cardList.map((card) => {
           return (
             <Card
               card={card}
@@ -56,6 +62,12 @@ const CardsSection = () => {
               cardList={cardList}
               onUpdateCardList={setCardList}
               shuffleCards={shuffleCards}
+              currentScore={currentScore}
+              onUpdateCurrentScore={onUpdateCurrentScore}
+              bestScore={bestScore}
+              onUpdateBestScore={onUpdateBestScore}
+              pickedCards={pickedCards}
+              onUpdatePickedCards={setPickedCards}
             />
           );
         })
