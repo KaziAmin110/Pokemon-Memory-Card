@@ -23,11 +23,15 @@ const CardsSection = ({
     return shuffledArray;
   };
 
+  const getRandomInt = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
   useEffect(() => {
     const fetchCardData = async () => {
       try {
         const response = await axios.get(
-          "https://pokeapi.co/api/v2/pokemon?limit=12"
+          `https://pokeapi.co/api/v2/pokemon?limit=12&offset=${getRandomInt(0, 151)}`
         );
         const pokemonData = response.data.results;
 
@@ -53,7 +57,7 @@ const CardsSection = ({
 
   return (
     <div className="cards-section">
-      {cardList.length > 0 ? (
+      {cardList.length > 0 && pickedCards.length < 12 ? (
         cardList.map((card) => {
           return (
             <Card
@@ -71,6 +75,10 @@ const CardsSection = ({
             />
           );
         })
+      ) : pickedCards.length === 12 ? (
+        <div className="win-message-container">
+          <p className="win-message">Congrats You Win!</p>
+        </div>
       ) : (
         <p>Loading Pokémon cards...</p>
       )}

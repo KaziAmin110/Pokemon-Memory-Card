@@ -60,3 +60,19 @@
   text-transform: capitalize;
 }
 
+.win-message-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid black;
+  gap: 1rem;
+  padding: 45px;
+  border-radius: 10px;
+}
+.win-message {
+  font-size: 2rem;
+  text-align: center;
+  color: green;
+  font-weight: bold;
+}
+
