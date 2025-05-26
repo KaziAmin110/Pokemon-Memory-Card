@@ -5,6 +5,18 @@ import axios from "axios";
 const CardsSection = () => {
   const [cardList, setCardList] = useState([]);
 
+  const shuffleCards = (array) => {
+    const shuffledArray = [...array];
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [
+        shuffledArray[j],
+        shuffledArray[i],
+      ];
+    }
+    return shuffledArray;
+  };
+
   useEffect(() => {
     const fetchCardData = async () => {
       try {
@@ -23,20 +35,25 @@ const CardsSection = () => {
             };
           })
         );
-        setCardList(pokemonCards);
+        
+        const shuffledCards = shuffleCards(pokemonCards);
+        setCardList(shuffledCards);
       } catch (error) {
         console.error("Error Fetching Pokemon Card Data", error);
       }
     };
-
     fetchCardData();
   }, []);
 
   return (
     <div className="cards-section">
-      {cardList.map((card, index) => {
-        return <Card card={card} key={card.id} index={index} />;
-      })}
+      {cardList.length > 0 ? (
+        cardList.map((card, index) => {
+          return <Card card={card} key={card.id} index={index} />;
+        })
+      ) : (
+        <p>Loading Pokémon cards...</p>
+      )}
     </div>
   );
 };
