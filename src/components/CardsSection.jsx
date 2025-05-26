@@ -31,7 +31,10 @@ const CardsSection = ({
     const fetchCardData = async () => {
       try {
         const response = await axios.get(
-          `https://pokeapi.co/api/v2/pokemon?limit=12&offset=${getRandomInt(0, 151)}`
+          `https://pokeapi.co/api/v2/pokemon?limit=12&offset=${getRandomInt(
+            0,
+            151
+          )}`
         );
         const pokemonData = response.data.results;
 
@@ -80,7 +83,9 @@ const CardsSection = ({
           <p className="win-message">Congrats You Win!</p>
         </div>
       ) : (
-        <p>Loading Pokémon cards...</p>
+        <div className="loading-message-container">
+          <h3 className="loading-message">Loading Pokémon cards...</h3>
+        </div>
       )}
     </div>
   );
