@@ -35,7 +35,7 @@ const CardsSection = () => {
             };
           })
         );
-        
+
         const shuffledCards = shuffleCards(pokemonCards);
         setCardList(shuffledCards);
       } catch (error) {
@@ -49,7 +49,15 @@ const CardsSection = () => {
     <div className="cards-section">
       {cardList.length > 0 ? (
         cardList.map((card, index) => {
-          return <Card card={card} key={card.id} index={index} />;
+          return (
+            <Card
+              card={card}
+              key={card.id}
+              cardList={cardList}
+              onUpdateCardList={setCardList}
+              shuffleCards={shuffleCards}
+            />
+          );
         })
       ) : (
         <p>Loading Pokémon cards...</p>
